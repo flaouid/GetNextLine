@@ -47,7 +47,7 @@ static char		*ft_refresh(char *prevbuffer, int i)
 {
 	char		*tmp;
 
-	if (prevbuffer[i] == '\n')
+	if (prevbuffer[i])
 		tmp = ft_strdup(prevbuffer + i + 1);
 	else
 		tmp = ft_strdup(prevbuffer + i);
@@ -78,15 +78,15 @@ int			get_next_line(int fd, char **line)
 	int		i;
 	int		ret;
 	char		*buffer;
-	static char	*prevbuffer = NULL;
+	static char	*prevbuffer;
 
-	if (fd < 0 || line == 0 || BUFF_SIZE <= 0 || (i = 0) || 
-	!(buffer = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
+	if (fd < 0 || line == 0 || BUFFER_SIZE <= 0 || (i = 0) ||
+	!(buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (ft_done(-1, &buffer, &prevbuffer));
 	if (!prevbuffer)
 		if (!(prevbuffer = malloc(sizeof(char) * 1)))
 			return (ft_done(-1, &buffer, &prevbuffer));
-	while (((!ft_strchr(buffer, '\n')) && (ret = read(fd, buffer, BUFF_SIZE))))
+	while (!ft_strchr(buffer, '\n') && (ret = read(fd, buffer, BUFFER_SIZE)))
 	{
 		buffer[ret] = '\0';
 		if (ret == -1)
@@ -98,5 +98,5 @@ int			get_next_line(int fd, char **line)
 	*line = ft_substr(prevbuffer, 0, i);
 	prevbuffer = ft_refresh(prevbuffer, i);
 	free(buffer);
-	return (prevbuffer[0] || ret ? 1 : 0);	
+	return (prevbuffer[0] || ret ? 1 : 0);
 }

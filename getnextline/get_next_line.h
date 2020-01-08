@@ -16,8 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h>
-# define BUFF_SIZE 1000000
+#include <stdio.h>
 
 int		get_next_line(int fd, char **line);
 void	ft_strdel(char **str);

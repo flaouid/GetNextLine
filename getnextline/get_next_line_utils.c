@@ -12,14 +12,6 @@
 
 #include "get_next_line.h"
 
-void			ft_strdel(char **str)
-{
-	if (str == NULL)
-		return ;
-	free(*str);
-	*str = NULL;
-}
-
 char			*ft_strchr(char *str, int c)
 {
 	unsigned int	i;
@@ -53,7 +45,6 @@ char			*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	return (str);
 }
-
 char			*ft_strdup(const char *s1)
 {
 	int		i;
