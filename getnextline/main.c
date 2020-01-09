@@ -12,8 +12,6 @@ int main(int argc, char **argv)
 	while ((ret = get_next_line(fd, &buff)) > 0)
 	{
 		printf("[Return: %d] Line #%d: %s\n", ret, ++line, buff);
-		//if (line == 6)
-		//close (fd);
 		free(buff);
 	}
 	printf("[Return: %d] Line #%d: %s\n", ret, ++line, buff);
@@ -23,6 +21,7 @@ int main(int argc, char **argv)
 		printf("-----------\nEnd of file\n\n");	
 		close(fd);
 	system("leaks a.out");	
+	free(buff);
 	return (0);
 													
 }

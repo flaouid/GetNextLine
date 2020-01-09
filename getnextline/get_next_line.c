@@ -80,7 +80,7 @@ int			get_next_line(int fd, char **line)
 	char		*buffer;
 	static char	*prevbuffer;
 
-	if (fd < 0 || line == 0 || BUFFER_SIZE <= 0 || (i = 0) ||
+	if (fd < 0 || !line || BUFFER_SIZE <= 0 || (i = 0) ||
 	!(buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (ft_done(-1, &buffer, &prevbuffer));
 	if (!prevbuffer)
@@ -88,15 +88,16 @@ int			get_next_line(int fd, char **line)
 			return (ft_done(-1, &buffer, &prevbuffer));
 	while (!ft_strchr(buffer, '\n') && (ret = read(fd, buffer, BUFFER_SIZE)))
 	{
-		buffer[ret] = '\0';
 		if (ret == -1)
 			return (ft_done(-1, &buffer, &prevbuffer));
+		buffer[ret] = '\0';
 		prevbuffer = ft_strjoin(prevbuffer, buffer);
 	}
 	while (prevbuffer[i] && prevbuffer[i] != '\n')
 		i++;
 	*line = ft_substr(prevbuffer, 0, i);
 	prevbuffer = ft_refresh(prevbuffer, i);
-	free(buffer);
-	return (prevbuffer[0] || ret ? 1 : 0);
+	if (ret || prevbuffer[0])
+		return (ft_done(1, &buffer, &prevbuffer));
+	return (ft_done(0, &buffer, &prevbuffer));
 }
