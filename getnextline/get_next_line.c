@@ -6,13 +6,13 @@
 /*   By: flaouid <laouid.ferdaous@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 12:45:24 by flaouid           #+#    #+#             */
-/*   Updated: 2019/12/04 16:40:09 by flaouid          ###   ########.fr       */
+/*   Updated: 2020/01/11 14:18:27 by flaouid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void		*ft_strcpy(char *dst, const char *src)
+static void			*ft_strcpy(char *dst, const char *src)
 {
 	unsigned int	i;
 
@@ -26,9 +26,9 @@ static void		*ft_strcpy(char *dst, const char *src)
 	return (dst);
 }
 
-char			*ft_strjoin(const char *s1, const char *s2)
+char				*ft_strjoin(const char *s1, const char *s2)
 {
-	char		*dest;
+	char			*dest;
 	unsigned int	length;
 
 	if (s1 == NULL || s2 == NULL)
@@ -40,22 +40,23 @@ char			*ft_strjoin(const char *s1, const char *s2)
 	ft_strcpy(dest, s1);
 	ft_strcpy(dest + length, s2);
 	free((char *)s1);
+	dest[ft_strlen(s1) + ft_strlen(s2)] = '\0';
 	return (dest);
 }
 
-static char		*ft_refresh(char *prevbuffer, int i)
+char				*ft_refresh(char *prevbuffer, int i)
 {
-	char		*tmp;
+	char			*tmp;
 
 	if (prevbuffer[i])
 		tmp = ft_strdup(prevbuffer + i + 1);
 	else
-		tmp = ft_strdup(prevbuffer + i);
+		tmp = NULL;
 	free(prevbuffer);
 	return (tmp);
 }
 
-int			ft_done(int ret, char **buffer, char **prevbuffer)
+int					ft_done(int ret, char **buffer, char **prevbuffer)
 {
 	if (ret >= 0 && (*buffer || *prevbuffer))
 	{
@@ -68,19 +69,18 @@ int			ft_done(int ret, char **buffer, char **prevbuffer)
 	{
 		if (!*buffer)
 			free(*buffer);
-		if (*prevbuffer)
-			free(*prevbuffer);
 	}
 	return (ret);
 }
-int			get_next_line(int fd, char **line)
-{
-	int		i;
-	int		ret;
-	char		*buffer;
-	static char	*prevbuffer;
 
-	if (fd < 0 || !line || BUFFER_SIZE <= 0 || (i = 0) ||
+int					get_next_line(int fd, char **line)
+{
+	int				i;
+	int				ret;
+	char			*buffer;
+	static char		*prevbuffer;
+
+	if (fd < 0 || line == 0 || BUFFER_SIZE <= 0 || (i = 0) ||
 	!(buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (ft_done(-1, &buffer, &prevbuffer));
 	if (!prevbuffer)
@@ -88,16 +88,16 @@ int			get_next_line(int fd, char **line)
 			return (ft_done(-1, &buffer, &prevbuffer));
 	while (!ft_strchr(buffer, '\n') && (ret = read(fd, buffer, BUFFER_SIZE)))
 	{
+		buffer[ret] = '\0';
 		if (ret == -1)
 			return (ft_done(-1, &buffer, &prevbuffer));
-		buffer[ret] = '\0';
 		prevbuffer = ft_strjoin(prevbuffer, buffer);
 	}
 	while (prevbuffer[i] && prevbuffer[i] != '\n')
 		i++;
 	*line = ft_substr(prevbuffer, 0, i);
 	prevbuffer = ft_refresh(prevbuffer, i);
-	if (ret || prevbuffer[0])
+	if (prevbuffer || ret)
 		return (ft_done(1, &buffer, &prevbuffer));
 	return (ft_done(0, &buffer, &prevbuffer));
 }

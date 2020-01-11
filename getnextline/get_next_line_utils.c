@@ -6,13 +6,13 @@
 /*   By: flaouid <laouid.ferdaous@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 10:43:56 by flaouid           #+#    #+#             */
-/*   Updated: 2019/12/02 16:03:57 by flaouid          ###   ########.fr       */
+/*   Updated: 2020/01/11 11:23:50 by flaouid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char			*ft_strchr(char *str, int c)
+char				*ft_strchr(char *str, int c)
 {
 	unsigned int	i;
 
@@ -26,9 +26,9 @@ char			*ft_strchr(char *str, int c)
 	return (NULL);
 }
 
-char			*ft_substr(char const *s, unsigned int start, size_t len)
+char				*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char		*str;
+	char			*str;
 	unsigned int	i;
 
 	if (s == NULL)
@@ -45,10 +45,11 @@ char			*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	return (str);
 }
-char			*ft_strdup(const char *s1)
+
+char				*ft_strdup(const char *s1)
 {
-	int		i;
-	char		*dest;
+	int				i;
+	char			*dest;
 
 	dest = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (!dest)
@@ -60,12 +61,12 @@ char			*ft_strdup(const char *s1)
 		i++;
 	}
 	dest[i] = '\0';
-		return (dest);
+	return (dest);
 }
 
-size_t			ft_strlen(const char *s)
+size_t				ft_strlen(const char *s)
 {
-	int		i;
+	int				i;
 
 	i = 0;
 	while (s[i])

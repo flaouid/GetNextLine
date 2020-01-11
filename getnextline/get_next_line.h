@@ -6,7 +6,7 @@
 /*   By: flaouid <laouid.ferdaous@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 12:39:09 by flaouid           #+#    #+#             */
-/*   Updated: 2019/12/02 16:44:34 by flaouid          ###   ########.fr       */
+/*   Updated: 2020/01/11 11:21:23 by flaouid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-#include <stdio.h>
+# include <stdio.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 512
+# endif
 
 int		get_next_line(int fd, char **line);
 void	ft_strdel(char **str);
@@ -26,4 +30,3 @@ char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *s);
 
 #endif
-
