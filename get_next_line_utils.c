@@ -6,7 +6,7 @@
 /*   By: flaouid <laouid.ferdaous@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 10:43:56 by flaouid           #+#    #+#             */
-/*   Updated: 2020/01/11 11:23:50 by flaouid          ###   ########.fr       */
+/*   Updated: 2020/01/18 14:53:53 by flaouid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char				*ft_strdup(const char *s1)
 
 size_t				ft_strlen(const char *s)
 {
-	size_t				i;
+	size_t			i;
 
 	i = 0;
 	while (s[i])
@@ -74,11 +74,11 @@ size_t				ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char				*ft_strjoin(char *s1, char *s2)
 {
-	char *str;
-	int	i;
-	int	cpy;
+	char			*str;
+	int				i;
+	int				cpy;
 
 	i = 0;
 	cpy = 0;
@@ -98,7 +98,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		}
 		str[i + cpy] = '\0';
 		free(s1);
-		return(str);
+		return (str);
 	}
 	return (NULL);
 }

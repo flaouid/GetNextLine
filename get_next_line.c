@@ -6,15 +6,15 @@
 /*   By: flaouid <laouid.ferdaous@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 12:45:24 by flaouid           #+#    #+#             */
-/*   Updated: 2020/01/11 14:18:27 by flaouid          ###   ########.fr       */
+/*   Updated: 2020/01/18 14:53:42 by flaouid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	ft_bzero(void *s, size_t n)
+void				ft_bzero(void *s, size_t n)
 {
-	size_t	i;
+	size_t			i;
 
 	i = 0;
 	while (i < n)
@@ -24,10 +24,10 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-void	*ft_calloc(size_t nbr, size_t size)
+void				*ft_calloc(size_t nbr, size_t size)
 {
-	void *str;
-	
+	void			*str;
+
 	if (!(str = malloc(size * nbr)))
 		return (0);
 	ft_bzero(str, nbr * size);
@@ -59,6 +59,8 @@ int					ft_done(int ret, char **buffer, char **prevbuffer)
 	{
 		if (!*buffer)
 			free(*buffer);
+		if (!*prevbuffer)
+			free(*prevbuffer);
 	}
 	return (ret);
 }
@@ -74,13 +76,13 @@ int					get_next_line(int fd, char **line)
 	!(buffer = (char *)ft_calloc(sizeof(char), (BUFFER_SIZE + 1))))
 		return (ft_done(-1, &buffer, &prevbuffer));
 	if (!prevbuffer)
-		if (!(prevbuffer = (char *)ft_calloc(sizeof(char) * 1)))
+		if (!(prevbuffer = (char *)ft_calloc(sizeof(char), 1)))
 			return (ft_done(-1, &buffer, &prevbuffer));
 	while (!ft_strchr(buffer, '\n') && (ret = read(fd, buffer, BUFFER_SIZE)))
 	{
-		buffer[ret] = '\0';
 		if (ret == -1)
 			return (ft_done(-1, &buffer, &prevbuffer));
+		buffer[ret] = '\0';
 		prevbuffer = ft_strjoin(prevbuffer, buffer);
 	}
 	while (prevbuffer[i] && prevbuffer[i] != '\n')

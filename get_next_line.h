@@ -6,7 +6,7 @@
 /*   By: flaouid <laouid.ferdaous@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 12:39:09 by flaouid           #+#    #+#             */
-/*   Updated: 2020/01/11 11:21:23 by flaouid          ###   ########.fr       */
+/*   Updated: 2020/01/18 14:55:02 by flaouid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <fcntl.h>
 # include <stdio.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 512
+# endif
 
 int		get_next_line(int fd, char **line);
 char	*ft_strchr(char *str, int c);
